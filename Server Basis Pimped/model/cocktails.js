@@ -25,7 +25,25 @@ async function getZutaten(name) {
     };
 }
 
+async function getKleinerPreis(preis){
+  const { rows } = await db.query(
+    'SELECT cname, preis FROM cocktail WHERE preis < $1',
+    [preis],
+  );
+  if (rows.length > 0)
+    return {
+      code: 200,
+      data: rows,
+    };
+  else
+    return {
+      code: 404,
+      data: `the specified preis ${preis} was not found in the database`,
+    };
+}
+
 module.exports = {
   getNamePreis,
   getZutaten,
+  getKleinerPreis,
 };
