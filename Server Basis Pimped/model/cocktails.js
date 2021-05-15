@@ -74,10 +74,20 @@ async function insertCocktail(c) {
   };
 }
 
+async function patchPreis(name, p){
+  let newPreis = p.preis;
+  await db.query(`UPDATE cocktail SET preis = ${newPreis} WHERE cname = $1`, [name]);
+  return {
+    code: 200,
+    data: `Updated to ${newPreis}`,
+  };
+}
+
 module.exports = {
   getNamePreis,
   getZutaten,
   getKleinerPreis,
   delCocktail,
   insertCocktail,
+  patchPreis
 };
