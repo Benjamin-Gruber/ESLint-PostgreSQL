@@ -76,7 +76,7 @@ async function insertCocktail(c) {
 
 async function patchPreis(name, p){
   let newPreis = p.preis;
-  await db.query(`UPDATE cocktail SET preis = ${newPreis} WHERE cname = $1`, [name]);
+  await db.query('UPDATE cocktail SET preis = $1 WHERE cname = $2', [newPreis, name]);
   return {
     code: 200,
     data: `Updated to ${newPreis}`,
