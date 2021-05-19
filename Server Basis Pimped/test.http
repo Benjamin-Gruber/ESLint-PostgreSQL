@@ -2,7 +2,7 @@ GET http://127.0.0.1:3000/cocktails
 ###
 GET http://127.0.0.1:3000/cocktails/Alice/zutaten
 ###
-GET http://127.0.0.1:3000/cocktail/6
+GET http://127.0.0.1:3000/cocktails/6
 ###
 DELETE http://127.0.0.1:3000/cocktail/Hit and Run 
 ###

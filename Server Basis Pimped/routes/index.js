@@ -4,7 +4,7 @@ const {getNamePreis, getZutaten, getKleinerPreis, delCocktail, insertCocktail, p
 
 const router = express.Router();
 
-router.get("/cocktail", asyncHandler(async (req, res) => {
+router.get("/cocktails", asyncHandler(async (req, res) => {
     const result = await getNamePreis();
     res.status(result.code).json(result);
 }))
@@ -14,7 +14,7 @@ router.get("/cocktails/:cname/zutaten", asyncHandler(async (req, res) => {
     res.status(result.code).json(result);
 }))
 
-router.get("/cocktail/:preis", asyncHandler(async (req, res) => {
+router.get("/cocktails/:preis", asyncHandler(async (req, res) => {
     const result = await getKleinerPreis(req.params.preis);
     res.status(result.code).json(result);
 }))
