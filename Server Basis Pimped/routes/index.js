@@ -9,7 +9,7 @@ router.get("/cocktail", asyncHandler(async (req, res) => {
     res.status(result.code).json(result);
 }))
 
-router.get("/cocktails/:cname", asyncHandler(async (req, res) => {
+router.get("/cocktails/:cname/zutaten", asyncHandler(async (req, res) => {
     const result = await getZutaten(req.params.cname);
     res.status(result.code).json(result);
 }))
