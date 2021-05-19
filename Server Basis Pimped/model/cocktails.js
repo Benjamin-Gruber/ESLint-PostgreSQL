@@ -14,10 +14,12 @@ async function getZutaten(name) {
     'SELECT zbez FROM zutat JOIN besteht USING(zid) JOIN cocktail USING(cid) WHERE cname = $1',
     [name],
   );
+  let zutaten = [];
+  rows.filter((el => zutaten.push(el.zbez)))
   if (rows.length > 0)
     return {
       code: 200,
-      data: rows,
+      data: zutaten,
     };
   else
     return {
