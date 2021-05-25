@@ -1,8 +1,6 @@
-GET http://127.0.0.1:3000/cocktails
+GET http://127.0.0.1:3000/cocktails?preis=6
 ###
 GET http://127.0.0.1:3000/cocktails/Cinderella/zutaten
-###
-GET http://127.0.0.1:3000/cocktails/6
 ###
 DELETE http://127.0.0.1:3000/cocktail/Hit and Run 
 ###
@@ -22,10 +20,5 @@ PATCH  http://127.0.0.1:3000/cocktail/Hit and Run
 Content-Type: application/json
 
 {
-    "cname":  "Hit and Run", 
-    "preis": 10,
-    "zubereitung": "eo ipso",
-    "kid":  1, 
-    "zgid": 1,
-    "sgid": 1
+    "preis": 10
 }

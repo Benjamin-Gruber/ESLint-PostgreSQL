@@ -1,7 +1,14 @@
 const { query } = require('../db');
 const db = require('../db');
 
-async function getNamePreis() {
+async function getCocktailPreis(preis) {
+  if (preis) {
+    const { rows } = await db.query('SELECT cname, preis FROM cocktail WHERE preis < $1', [preis]);
+    return {
+      code: 200,
+      data: rows,
+    };
+  }
   const { rows } = await db.query('SELECT cname, preis FROM cocktail');
   return {
     code: 200,
@@ -14,32 +21,12 @@ async function getZutaten(name) {
     'SELECT zbez FROM zutat JOIN besteht USING(zid) JOIN cocktail USING(cid) WHERE cname = $1',
     [name],
   );
-  let zutaten = [];
-  rows.filter((el => zutaten.push(el.zbez)))
-  if (rows.length > 0)
-    return {
-      code: 200,
-      data: zutaten,
-    };
-  else
-    return {
-      code: 404,
-      data: `the specified cocktail ${name} was not found in the database`,
-    };
-}
-
-async function getKleinerPreis(preis) {
-  const { rows } = await db.query('SELECT cname, preis FROM cocktail WHERE preis < $1', [preis]);
-  if (rows.length > 0)
-    return {
-      code: 200,
-      data: rows,
-    };
-  else
-    return {
-      code: 404,
-      data: `the specified preis ${preis} was not found in the database`,
-    };
+  const zutaten = [];
+  rows.filter((el) => zutaten.push(el.zbez));
+  return {
+    code: 200,
+    data: zutaten,
+  };
 }
 
 async function delCocktail(name) {
@@ -63,8 +50,8 @@ async function delCocktail(name) {
 }
 
 async function insertCocktail(c) {
-  let { rows } = await db.query('SELECT MAX(cid) AS max FROM cocktail');
-  let cid = rows[0].max + 1;
+  const { rows } = await db.query('SELECT MAX(cid) AS max FROM cocktail');
+  const cid = rows[0].max + 1;
   await db.query(
     `INSERT INTO cocktail (cid, cname, preis, zubereitung, kid, zgid, sgid)
         VALUES($1, $2, $3, $4, $5, $6, $7)`,
@@ -76,8 +63,8 @@ async function insertCocktail(c) {
   };
 }
 
-async function patchPreis(name, p){
-  let newPreis = p.preis;
+async function patchPreis(name, p) {
+  const newPreis = p.preis;
   await db.query('UPDATE cocktail SET preis = $1 WHERE cname = $2', [newPreis, name]);
   return {
     code: 200,
@@ -86,10 +73,9 @@ async function patchPreis(name, p){
 }
 
 module.exports = {
-  getNamePreis,
+  getCocktailPreis,
   getZutaten,
-  getKleinerPreis,
   delCocktail,
   insertCocktail,
-  patchPreis
+  patchPreis,
 };
